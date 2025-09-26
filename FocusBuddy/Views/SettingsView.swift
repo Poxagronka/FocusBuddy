@@ -357,7 +357,13 @@ struct DebugSection: View {
             VStack(spacing: 12) {
                 // Request Permissions Button
                 Button("🔐 Запросить разрешения") {
-                    focusTimer.requestNotificationPermissions()
+                    Task {
+                        do {
+                            try await focusTimer.requestNotificationPermissions()
+                        } catch {
+                            print("Failed to request permissions: \(error)")
+                        }
+                    }
                 }
                 .foregroundStyle(.purple)
                 .frame(maxWidth: .infinity)

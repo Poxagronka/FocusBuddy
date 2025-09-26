@@ -34,7 +34,15 @@ struct DebugView: View {
                                     title: "🔐 Запросить разрешения",
                                     subtitle: "Запросить разрешения на уведомления",
                                     color: .purple,
-                                    action: { focusTimer.requestNotificationPermissions() }
+                                    action: {
+                                        Task {
+                                            do {
+                                                try await focusTimer.requestNotificationPermissions()
+                                            } catch {
+                                                print("Failed to request permissions: \(error)")
+                                            }
+                                        }
+                                    }
                                 )
 
                                 DebugButton(
